@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us - CarRental{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="relative bg-gray-900 rounded-xl overflow-hidden mb-12">
+    <div class="absolute inset-0">
+        <img src="https://images.pexels.com/photos/4173196/pexels-photo-4173196.jpeg" alt="Car rental team" class="w-full h-full object-cover opacity-50">
+    </div>
+    <div class="relative px-4 py-16 sm:px-6 sm:py-24 lg:py-32 lg:px-8">
+        <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl text-center">
+            About CarRental
+        </h1>
+        <p class="mt-6 max-w-2xl mx-auto text-xl text-gray-300 text-center">
+            Premium car rental services since 2010.
+        </p>
+    </div>
+</div>
+
+<!-- Our Story Section -->
+<div class="max-w-4xl mx-auto mb-16">
+    <h2 class="text-3xl font-bold text-gray-800 mb-6">Our Story</h2>
+    <div class="prose prose-lg max-w-none text-gray-600">
+        <p>Founded in 2010, CarRental began with a simple mission: to provide exceptional car rental services that prioritize customer satisfaction, vehicle quality, and value for money.</p>
+        
+        <p>What started as a small local operation with just 10 vehicles has now grown into one of the leading car rental services in the region, with a fleet of over 500 vehicles across multiple locations.</p>
+        
+        <p>Our commitment to excellence has remained unchanged throughout our growth. We continue to invest in maintaining a modern, diverse fleet of vehicles, employing knowledgeable staff, and developing user-friendly booking systems that make renting a car a pleasure rather than a chore.</p>
+        
+        <p>At CarRental, we believe that every journey matters. Whether you're a business traveler needing reliable transportation for a conference, a family embarking on a vacation, or someone whose car is temporarily out of commission, we're here to ensure you have the perfect vehicle for your needs.</p>
+    </div>
+</div>
+
+<!-- Our Values Section -->
+<div class="bg-gray-50 rounded-xl p-8 mb-16">
+    <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Our Values</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Value 1 -->
+            <div class="bg-white p-6 rounded-lg shadow-card text-center hover-zoom">
+                <div class="inline-flex items-center justify-center w-16 h-16 mb-4 bg-primary-100 text-primary-600 rounded-full text-2xl">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Quality & Safety</h3>
+                <p class="text-gray-600">We maintain a modern fleet with regular safety inspections to ensure your peace of mind on the road.</p>
+            </div>
+            
+            <!-- Value 2 -->
+            <div class="bg-white p-6 rounded-lg shadow-card text-center hover-zoom">
+                <div class="inline-flex items-center justify-center w-16 h-16 mb-4 bg-primary-100 text-primary-600 rounded-full text-2xl">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Customer First</h3>
+                <p class="text-gray-600">Our customer-centric approach ensures a seamless rental experience from booking to return.</p>
+            </div>
+            
+            <!-- Value 3 -->
+            <div class="bg-white p-6 rounded-lg shadow-card text-center hover-zoom">
+                <div class="inline-flex items-center justify-center w-16 h-16 mb-4 bg-primary-100 text-primary-600 rounded-full text-2xl">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Sustainability</h3>
+                <p class="text-gray-600">We're committed to reducing our environmental footprint with fuel-efficient and electric vehicles.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Our Team Section -->
+<div class="max-w-4xl mx-auto mb-16">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Our Leadership Team</h2>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Team Member 1 -->
+        <div class="bg-white rounded-lg shadow-card overflow-hidden hover-zoom">
+            <div class="h-48 bg-gray-200 flex items-center justify-center">
+                <div class="w-24 h-24 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center text-4xl">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+            <div class="p-4 text-center">
+                <h3 class="text-xl font-bold text-gray-800">John Smith</h3>
+                <p class="text-gray-600">CEO & Founder</p>
+                <div class="mt-4 flex justify-center space-x-3">
+                    <a href="#" class="text-gray-400 hover:text-primary-600 transition-colors">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-primary-600 transition-colors">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Team Member 2 -->
+        <div class="bg-white rounded-lg shadow-card overflow-hidden hover-zoom">
+            <div class="h-48 bg-gray-200 flex items-center justify-center">
+                <div class="w-24 h-24 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center text-4xl">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+            <div class="p-4 text-center">
+                <h3 class="text-xl font-bold text-gray-800">Sarah Johnson</h3>
+                <p class="text-gray-600">Chief Operations Officer</p>
+                <div class="mt-4 flex justify-center space-x-3">
+                    <a href="#" class="text-gray-400 hover:text-primary-600 transition-colors">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-primary-600 transition-colors">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Team Member 3 -->
+        <div class="bg-white rounded-lg shadow-card overflow-hidden hover-zoom">
+            <div class="h-48 bg-gray-200 flex items-center justify-center">
+                <div class="w-24 h-24 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center text-4xl">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+            <div class="p-4 text-center">
+                <h3 class="text-xl font-bold text-gray-800">Michael Chen</h3>
+                <p class="text-gray-600">Fleet Manager</p>
+                <div class="mt-4 flex justify-center space-x-3">
+                    <a href="#" class="text-gray-400 hover:text-primary-600 transition-colors">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-primary-600 transition-colors">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="bg-primary-600 rounded-xl p-8 text-white mb-16">
+    <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold mb-8 text-center">CarRental by the Numbers</h2>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <!-- Stat 1 -->
+            <div>
+                <div class="text-4xl font-bold">500+</div>
+                <div class="text-primary-200 mt-2">Vehicles</div>
+            </div>
+            
+            <!-- Stat 2 -->
+            <div>
+                <div class="text-4xl font-bold">15</div>
+                <div class="text-primary-200 mt-2">Locations</div>
+            </div>
+            
+            <!-- Stat 3 -->
+            <div>
+                <div class="text-4xl font-bold">50,000+</div>
+                <div class="text-primary-200 mt-2">Happy Customers</div>
+            </div>
+            
+            <!-- Stat 4 -->
+            <div>
+                <div class="text-4xl font-bold">15</div>
+                <div class="text-primary-200 mt-2">Years of Service</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Testimonials Section -->
+<div class="max-w-4xl mx-auto mb-16">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">What Our Customers Say</h2>
+    
+    <div class="grid grid-cols-1 gap-6">
+        <!-- Testimonial 1 -->
+        <div class="bg-white p-6 rounded-lg shadow-card">
+            <div class="flex items-center mb-4">
+                <div class="text-accent-500 text-lg">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+            <p class="text-gray-600 italic mb-4">"I've been renting from CarRental for the past 5 years whenever I visit the city. Their service is consistently excellent, and the vehicles are always in pristine condition. The staff goes above and beyond to ensure a smooth rental experience."</p>
+            <div class="flex items-center">
+                <div class="flex-shrink-0 mr-3">
+                    <div class="w-10 h-10 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div>
+                    <div class="font-medium text-gray-800">Jennifer Adams</div>
+                    <div class="text-gray-500 text-sm">Regular Customer</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Testimonial 2 -->
+        <div class="bg-white p-6 rounded-lg shadow-card">
+            <div class="flex items-center mb-4">
+                <div class="text-accent-500 text-lg">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+            <p class="text-gray-600 italic mb-4">"As a business traveler, I need reliability and efficiency. CarRental delivers on both fronts. Their online booking system is intuitive, pickup is fast, and the vehicles are always clean and well-maintained. I wouldn't use any other rental service."</p>
+            <div class="flex items-center">
+                <div class="flex-shrink-0 mr-3">
+                    <div class="w-10 h-10 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+                <div>
+                    <div class="font-medium text-gray-800">Robert Nguyen</div>
+                    <div class="text-gray-500 text-sm">Business Executive</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="bg-gray-100 rounded-xl p-8 text-center">
+    <h2 class="text-3xl font-bold text-gray-800 mb-4">Ready to Hit the Road?</h2>
+    <p class="text-gray-600 mb-6 max-w-2xl mx-auto">Experience the CarRental difference with our premium vehicles and exceptional service.</p>
+    <a href="{% url 'car_list' %}" class="inline-block bg-primary-600 hover:bg-primary-700 text-white font-medium px-6 py-3 rounded-md transition-colors">
+        Browse Our Fleet
+    </a>
+</div>
+{% endblock %}
