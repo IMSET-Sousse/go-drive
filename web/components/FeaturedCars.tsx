@@ -1,12 +1,33 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { cars } from '@/lib/data';
+import { carService, Car } from '@/lib/services/carService';
 import CarCard from './CarCard';
 
 const FeaturedCars = () => {
+  const [cars, setCars] = useState<Car[]>([]);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  
+  useEffect(() => {
+    const fetchCars = async () => {
+      try {
+        setLoading(true);
+        const data = await carService.getFeaturedCars();
+        setCars(data);
+        setError(null);
+      } catch (err) {
+        setError('Failed to load cars. Please try again later.');
+        console.error('Error loading cars:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCars();
+  }, []);
   
   const categories = Array.from(new Set(cars.map(car => car.category)));
   
@@ -15,6 +36,32 @@ const FeaturedCars = () => {
     : cars;
     
   const featuredCars = filteredCars.slice(0, 3);
+  
+  if (loading) {
+    return (
+      <section className="py-5 bg-light">
+        <div className="container">
+          <div className="text-center">
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="py-5 bg-light">
+        <div className="container">
+          <div className="alert alert-danger" role="alert">
+            {error}
+          </div>
+        </div>
+      </section>
+    );
+  }
   
   return (
     <section className="py-5 bg-light">

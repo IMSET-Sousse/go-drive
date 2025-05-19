@@ -12,6 +12,7 @@ urlpatterns = [
     path('cars/', include('cars.urls')),
     path('bookings/', include('bookings.urls')),
     path('accounts/', include('users.urls')),
+    path('api/', include('cars.urls')),  # Include the API URLs
 ]
 
 if settings.DEBUG:
