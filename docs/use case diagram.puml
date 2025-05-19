@@ -1,0 +1,47 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Utilisateur" as User
+
+rectangle "Système de Réservation de Véhicules" {
+  usecase "Réserver Véhicule" as UC1
+  usecase "Explorer Véhicules" as UC2
+  usecase "Visualiser en 3D" as UC3
+  usecase "Gérer Réservations" as UC4
+  usecase "Donner Avis et Notes" as UC5
+  usecase "Communiquer avec Support" as UC6
+  usecase "Gérer Compte Utilisateur" as UC7
+  usecase "Système de Paiement" as UC8
+  usecase "Gérer Paiement" as UC9
+  
+  usecase "• Sélectionner dates\n• Choisir lieu de prise en charge\n• Confirmer réservation" as UC1_1
+  usecase "• Parcourir le catalogue\n• Filtrer par critères\n• Consulter disponibilités" as UC2_1
+  usecase "• Rotation à 360°\n• Zoom sur détails\n• Vue intérieure" as UC3_1
+  usecase "• Consulter réservations\n• Modifier réservation\n• Annuler réservation" as UC4_1
+  usecase "• Noter véhicules\n• Laisser commentaires\n• Consulter avis" as UC5_1
+  usecase "• Chat en direct\n• Recevoir notifications\n• Recevoir rappels SMS" as UC6_1
+  usecase "• Inscription/Connexion\n• Gestion du profil\n• Préférences utilisateur\n• Historique des locations" as UC7_1
+  usecase "• Paiement par carte\n• Facturation automatique" as UC8_1
+}
+
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC4
+User --> UC5
+User --> UC6
+User --> UC7
+
+UC1 --> UC1_1
+UC2 --> UC2_1
+UC3 --> UC3_1
+UC4 --> UC4_1
+UC5 --> UC5_1
+UC6 --> UC6_1
+UC7 --> UC7_1
+
+UC8 --> UC9
+UC9 --> UC8_1
+UC1 --> UC9
+@enduml

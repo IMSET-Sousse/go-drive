@@ -1,0 +1,82 @@
+@startuml
+skinparam class {
+  BackgroundColor #FFFACD
+  BorderColor #000000
+  ArrowColor #800080
+}
+
+class Vehicule {
+  -id: String
+  -marque: String
+  -modele: String
+  -annee: Integer
+  -prix: Decimal
+  -disponible: Boolean
+  +verifierDisponibilite()
+  +mettreAJourStatut()
+}
+
+class Utilisateur {
+  -id: String
+  -nom: String
+  -email: String
+  -telephone: String
+  +sInscrire()
+  +seConnecter()
+  +modifierProfil()
+}
+
+class Reservation {
+  -id: String
+  -dateDebut: Date
+  -dateFin: Date
+  -lieuPrise: String
+  -statut: String
+  -montantTotal: Decimal
+  +calculerPrix()
+  +confirmer()
+  +annuler()
+}
+
+class Modele3D {
+  -vehiculeId: String
+  -urlModele: String
+  +chargerModele()
+  +afficherInterieur()
+}
+
+class Avis {
+  -id: String
+  -note: Integer
+  -commentaire: String
+  -date: Date
+  +publier()
+  +modifier()
+}
+
+class Paiement {
+  -id: String
+  -reservationId: String
+  -montant: Decimal
+  -methode: String
+  -statut: String
+  +traiterPaiement()
+  +genererFacture()
+}
+
+class Lieu {
+  -id: String
+  -nom: String
+  -adresse: String
+  -ville: String
+  +obtenirCoordonnees()
+}
+
+Vehicule "1" -- "1" Modele3D : possède >
+Vehicule "1" -- "*" Reservation : < est réservé via
+Utilisateur "1" -- "*" Reservation : effectue >
+Utilisateur "1" -- "*" Avis : publie >
+Utilisateur "1" -- "*" Avis : < reçoit
+Reservation "1" -- "1" Paiement : a >
+Reservation "*" -- "1" Lieu : lieu de prise >
+@enduml
