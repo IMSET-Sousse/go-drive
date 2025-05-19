@@ -1,10 +1,12 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from . import views
 
+router = DefaultRouter()
+router.register(r'cars', views.CarViewSet)
+router.register(r'categories', views.CarCategoryViewSet)
+router.register(r'locations', views.LocationViewSet)
+
 urlpatterns = [
-    path('', views.car_list, name='car_list'),
-    path('<slug:slug>/', views.car_detail, name='car_detail'),
-    path('category/<int:category_id>/', views.car_list_by_category, name='car_list_by_category'),
-    path('location/<int:location_id>/', views.car_list_by_location, name='car_list_by_location'),
-    path('<slug:slug>/add_review/', views.add_review, name='add_review'),
+    path('', include(router.urls)),
 ]

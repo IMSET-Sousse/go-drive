@@ -5,6 +5,11 @@ from django.db.models import Q, Avg
 from .models import Car, CarCategory, Location, Review
 from .forms import ReviewForm
 from bookings.forms import BookingForm
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from .serializers import CarSerializer, CarCategorySerializer, LocationSerializer
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
 def car_list(request):
@@ -160,3 +165,51 @@ def add_review(request, slug):
         'form': form,
         'car': car,
     })
+
+
+class CarViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows cars to be viewed or edited.
+    """
+    queryset = Car.objects.all()
+    serializer_class = CarSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    lookup_field = 'slug'
+
+    def get_queryset(self):
+        queryset = Car.objects.all()
+        category = self.request.query_params.get('category', None)
+        if category:
+            queryset = queryset.filter(category__slug=category)
+        return queryset
+
+
+class CarCategoryViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows car categories to be viewed or edited.
+    """
+    queryset = CarCategory.objects.all()
+    serializer_class = CarCategorySerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    lookup_field = 'slug'
+
+
+class LocationViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows locations to be viewed or edited.
+    """
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    @action(detail=False, methods=['get'])
+    def featured(self, request):
+        featured_cars = Car.objects.filter(is_featured=True)[:3]
+        serializer = self.get_serializer(featured_cars, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'], url_path='category/(?P<category>[^/.]+)')
+    def category(self, request, category=None):
+        cars = Car.objects.filter(category=category)
+        serializer = self.get_serializer(cars, many=True)
+        return Response(serializer.data)

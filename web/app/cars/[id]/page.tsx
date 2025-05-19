@@ -1,232 +1,130 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { format, addDays, differenceInDays } from 'date-fns';
-import { cars } from '@/lib/data';
-import { useAuth } from '@/context/AuthContext';
-import { 
-  Calendar, DollarSign, Users, Gauge, Check, 
-  ShieldCheck, Car as CarIcon, ArrowLeft 
-} from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+import Image from 'next/image';
+import { carService, Car } from '@/lib/services/carService';
+import { Calendar, MapPin, Users, Check } from 'lucide-react';
 
 export default function CarDetail() {
   const params = useParams();
-  const router = useRouter();
-  const { user } = useAuth();
-  const carId = Number(params.id);
-  
-  const car = cars.find(c => c.id === carId);
-  
-  const [startDate, setStartDate] = useState(format(new Date(), 'yyyy-MM-dd'));
-  const [endDate, setEndDate] = useState(format(addDays(new Date(), 3), 'yyyy-MM-dd'));
-  
-  const calculateTotalPrice = () => {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    const days = Math.max(1, differenceInDays(end, start));
-    return days * (car?.price || 0);
-  };
-  
-  const handleReservation = () => {
-    if (!user) {
-      router.push('/login');
-      return;
-    }
-    
-    alert('Reservation created successfully! This is a demo so no actual reservation is made.');
-    router.push('/reservations');
-  };
-  
-  if (!car) {
+  const [car, setCar] = useState<Car | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchCar = async () => {
+      if (!params?.id) {
+        setError('Invalid car ID');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        setLoading(true);
+        const carId = parseInt(params.id as string);
+        const data = await carService.getCarById(carId);
+        setCar(data);
+        setError(null);
+      } catch (err) {
+        setError('Failed to load car details. Please try again later.');
+        console.error('Error loading car:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCar();
+  }, [params?.id]);
+
+  if (loading) {
     return (
-      <div className="container py-5 text-center">
-        <h2>Car not found</h2>
-        <p className="mb-4">The car you're looking for doesn't exist or has been removed.</p>
-        <button 
-          className="btn btn-primary"
-          onClick={() => router.push('/cars')}
-        >
-          Browse Other Cars
-        </button>
+      <div className="container py-5">
+        <div className="text-center">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
       </div>
     );
   }
-  
+
+  if (error || !car) {
+    return (
+      <div className="container py-5">
+        <div className="alert alert-danger" role="alert">
+          {error || 'Car not found'}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="container py-5">
-      <button 
-        className="btn btn-outline-secondary mb-4 d-flex align-items-center"
-        onClick={() => router.push('/cars')}
-      >
-        <ArrowLeft size={16} className="me-2" />
-        Back to Cars
-      </button>
-      
       <div className="row">
-        <div className="col-lg-8 mb-4 mb-lg-0">
-          <div className="card shadow-sm">
-            <div className="position-relative">
-              <img 
-                src={car.image} 
-                className="card-img-top" 
-                alt={`${car.make} ${car.model}`}
-                style={{ height: '400px', objectFit: 'cover' }}
-              />
-              <div className="position-absolute top-0 end-0 p-3">
-                <span className="badge bg-dark">{car.category}</span>
-              </div>
-            </div>
-            
-            <div className="card-body p-4">
-              <div className="d-flex justify-content-between align-items-start mb-3">
-                <div>
-                  <h1 className="card-title mb-1">{car.make} {car.model}</h1>
-                  <p className="text-muted mb-0">{car.year} • {car.name}</p>
-                </div>
-                <div className="text-end">
-                  <div className="fs-3 fw-bold text-primary">${car.price}</div>
-                  <div className="text-muted">per day</div>
-                </div>
-              </div>
-              
-              <hr />
-              
-              <div className="row mb-4">
-                <div className="col-sm-3 col-6 mb-3">
-                  <div className="d-flex align-items-center">
-                    <CarIcon size={20} className="text-primary me-2" />
-                    <span>{car.make}</span>
-                  </div>
-                </div>
-                <div className="col-sm-3 col-6 mb-3">
-                  <div className="d-flex align-items-center">
-                    <Calendar size={20} className="text-primary me-2" />
-                    <span>{car.year}</span>
-                  </div>
-                </div>
-                <div className="col-sm-3 col-6 mb-3">
-                  <div className="d-flex align-items-center">
-                    <DollarSign size={20} className="text-primary me-2" />
-                    <span>${car.price}/day</span>
-                  </div>
-                </div>
-                <div className="col-sm-3 col-6 mb-3">
-                  <div className="d-flex align-items-center">
-                    <ShieldCheck size={20} className="text-primary me-2" />
-                    <span>Insured</span>
-                  </div>
-                </div>
-              </div>
-              
-              <h5 className="mb-3">Description</h5>
-              <p>{car.description}</p>
-              
-              <h5 className="mb-3">Features</h5>
-              <div className="row mb-4">
-                {car.features.map((feature, index) => (
-                  <div key={index} className="col-md-6 mb-2">
-                    <div className="d-flex align-items-center">
-                      <Check size={18} className="text-success me-2" />
-                      <span>{feature}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-          
-          {/* Additional Images Section (placeholder) */}
-          <div className="mt-4">
-            <h5 className="mb-3">Gallery</h5>
-            <div className="row g-2">
-              <div className="col-4">
-                <img 
-                  src={car.image} 
-                  className="img-fluid rounded" 
-                  alt="Car view 1"
-                  style={{ height: '120px', objectFit: 'cover', width: '100%' }}
-                />
-              </div>
-              <div className="col-4">
-                <img 
-                  src="https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
-                  className="img-fluid rounded" 
-                  alt="Car view 2"
-                  style={{ height: '120px', objectFit: 'cover', width: '100%' }}
-                />
-              </div>
-              <div className="col-4">
-                <img 
-                  src="https://images.pexels.com/photos/2365572/pexels-photo-2365572.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" 
-                  className="img-fluid rounded" 
-                  alt="Car view 3"
-                  style={{ height: '120px', objectFit: 'cover', width: '100%' }}
-                />
-              </div>
-            </div>
+        <div className="col-lg-8">
+          <div className="position-relative" style={{ height: '400px' }}>
+            <Image
+              src={car.image}
+              alt={`${car.make} ${car.model}`}
+              fill
+              className="rounded-3 object-fit-cover"
+            />
           </div>
         </div>
         
         <div className="col-lg-4">
-          <div className="card shadow-sm sticky-top" style={{ top: '20px' }}>
-            <div className="card-header bg-primary text-white">
-              <h5 className="mb-0">Book this car</h5>
-            </div>
-            <div className="card-body p-4">
-              <div className="mb-3">
-                <label htmlFor="startDate" className="form-label">Pick-up Date</label>
-                <input
-                  type="date"
-                  className="form-control"
-                  id="startDate"
-                  value={startDate}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  min={format(new Date(), 'yyyy-MM-dd')}
-                />
-              </div>
+          <div className="card border-0 shadow-sm">
+            <div className="card-body">
+              <h1 className="h2 mb-3">{car.make} {car.model}</h1>
               
-              <div className="mb-3">
-                <label htmlFor="endDate" className="form-label">Return Date</label>
-                <input
-                  type="date"
-                  className="form-control"
-                  id="endDate"
-                  value={endDate}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  min={startDate}
-                />
-              </div>
-              
-              <div className="alert alert-light p-3">
-                <div className="d-flex justify-content-between mb-2">
-                  <span>Daily Rate:</span>
-                  <span>${car.price}/day</span>
+              <div className="d-flex gap-3 mb-4">
+                <div className="d-flex align-items-center">
+                  <Calendar className="text-muted me-2" size={20} />
+                  <span>{car.year}</span>
                 </div>
-                <div className="d-flex justify-content-between mb-2">
-                  <span>Duration:</span>
-                  <span>
-                    {Math.max(1, differenceInDays(new Date(endDate), new Date(startDate)))} days
-                  </span>
+                <div className="d-flex align-items-center">
+                  <MapPin className="text-muted me-2" size={20} />
+                  <span>{car.category}</span>
                 </div>
-                <hr />
-                <div className="d-flex justify-content-between fw-bold">
-                  <span>Total:</span>
-                  <span>${calculateTotalPrice()}</span>
+                <div className="d-flex align-items-center">
+                  <Users className="text-muted me-2" size={20} />
+                  <span>5 seats</span>
                 </div>
               </div>
-              
+
+              <div className="mb-4">
+                <h3 className="h4 mb-3">Features</h3>
+                <div className="d-flex flex-wrap gap-2">
+                  {car.features.map((feature, index) => (
+                    <span key={index} className="badge bg-light text-dark">
+                      {feature}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <h3 className="h4 mb-3">Description</h3>
+                <p className="text-muted">{car.description}</p>
+              </div>
+
+              <div className="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                  <span className="h3 mb-0">${car.price}</span>
+                  <span className="text-muted">/day</span>
+                </div>
+                <span className={`badge ${car.availability ? 'bg-success' : 'bg-danger'}`}>
+                  {car.availability ? 'Available' : 'Unavailable'}
+                </span>
+              </div>
+
               <button 
-                className="btn btn-primary w-100 py-2 mb-3"
-                onClick={handleReservation}
+                className="btn btn-primary w-100"
                 disabled={!car.availability}
               >
-                {car.availability ? 'Book Now' : 'Unavailable'}
+                Book Now
               </button>
-              
-              <div className="small text-muted text-center">
-                <p className="mb-0">Free cancellation up to 24 hours before pick-up</p>
-              </div>
             </div>
           </div>
         </div>
