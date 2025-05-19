@@ -1,0 +1,58 @@
+:root {
+--foreground-rgb: 0, 0, 0;
+--background-start-rgb: 214, 219, 220;
+--background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+:root {
+--foreground-rgb: 255, 255, 255;
+--background-start-rgb: 0, 0, 0;
+--background-end-rgb: 0, 0, 0;
+}
+}
+
+/* Base styles */
+body {
+margin: 0;
+font-family: 'Segoe UI', sans-serif;
+background-color: #f8f9fa;
+color: rgb(var(--foreground-rgb));
+}
+
+/* Custom lift hover effect */
+.hover-lift {
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Animation classes (can be used with animate.css or custom animations) */
+.animate__animated {
+animation-duration: 1s;
+animation-fill-mode: both;
+}
+
+.animate__fadeIn {
+animation-name: fadeIn;
+}
+
+.animate__delay-1s {
+animation-delay: 0.5s;
+}
+
+.animate__delay-2s {
+animation-delay: 1s;
+}
+
+@keyframes fadeIn {
+from {
+opacity: 0;
+}
+to {
+opacity: 1;
+}
+}
