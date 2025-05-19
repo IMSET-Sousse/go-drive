@@ -44,6 +44,7 @@ Analyse des principaux concurrents
  OuiCar : Prix bas, simple à utiliser, mais Moins de garanties, qualité variable
 
  Rentalcars : Comparateur pratique, rapide, mais Moins de garanties, qualité variable
+
 Points forts à retenir
  Recherche avancée avec filtres multiples (date, prix, localisation, type de voiture).
 
